@@ -16,6 +16,12 @@ const movies = [{
     // return Array.from(movies);
   };
 
+exports.getOne = (movieId) => {
+
+  const movie = movies.find(movie => movie._id == movieId);
+
+  return movie;
+};
 exports.create = (movieData) => {
     // console.log(movies);
     movieData._id = movies[movies.length - 1]._id + 1;
