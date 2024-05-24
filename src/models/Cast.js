@@ -16,6 +16,10 @@ const castSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    nameInMovie: {
+        type: String,
+        required: true,
+    },
     castImage: {
         type: String,
         required: true,
