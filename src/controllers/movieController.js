@@ -29,15 +29,15 @@ router.post('/create', isAuth, async (req, res) => {
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getOne(movieId).lean();
-
     // Add isOwner check
-    const isOwner = movie.owner == req.user._id;
+    const isOwner = movie.owner == req.user?._id;
+    const isAuthenticated = !!req.user;
 
     movie.rating = new Array(Number(movie.rating)).fill(true);
     // movie.ratingStars = '&#x2605;'.repeat(movie.rating);
 
     // console.log(casts);
-    res.render('movie/details', { movie, isOwner }); //casts
+    res.render('movie/details', { movie, isOwner, isAuthenticated }); //casts
 
 });
 
