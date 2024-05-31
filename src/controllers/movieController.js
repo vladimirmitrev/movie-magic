@@ -3,16 +3,17 @@ const router = require('express').Router();
 const movieService = require('../services/movieService');
 const castService = require('../services/castService');
 const { isAuth } = require('../middlewares/authMiddleware'); 
+const { default: mongoose } = require('mongoose');
 
 router.get('/create', isAuth, (req, res) => {
     res.render('create');
 });
 
 router.post('/create', isAuth, async (req, res) => {
-    const user = await req.user;
+    // const user = await req.user;
     const newMovie = {
         ...req.body,
-        owner: user._id,
+        owner: req.user._id,
     };
     // newMovie.owner = await req.user._id;
     
@@ -29,13 +30,13 @@ router.post('/create', isAuth, async (req, res) => {
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getOne(movieId).lean();
-    // const casts = await castService.getByIds(movie.casts).lean();
+    const isOwner = movie.owner == req.user._id;
 
     movie.rating = new Array(Number(movie.rating)).fill(true);
     // movie.ratingStars = '&#x2605;'.repeat(movie.rating);
 
     // console.log(casts);
-    res.render('movie/details', { movie }); //casts
+    res.render('movie/details', { movie, isOwner }); //casts
 
 });
 
