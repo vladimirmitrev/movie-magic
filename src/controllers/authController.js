@@ -4,6 +4,7 @@ const authService = require('../services/authService');
 router.get('/register', (req, res) => {
     res.render('auth/register');
 })
+
 router.post('/register', async (req, res) => {
     const userData = req.body;
 
@@ -11,4 +12,9 @@ router.post('/register', async (req, res) => {
 
     res.redirect('/auth/login');
 });
+
+router.get('/login', (req, res) => {
+    res.render('auth/login');
+});
+
 module.exports = router;
