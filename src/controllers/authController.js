@@ -19,7 +19,7 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password);
+    // console.log(email, password);
 
     const token = await authService.login(email, password);
     // console.log(token);

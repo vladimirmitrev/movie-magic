@@ -27,6 +27,6 @@ exports.isAuth = (req, res, next) => {
     if (!req.user) {
         res.redirect('/auth/login');
     }
-    
+    // req.user = req.user;
     next();
 }

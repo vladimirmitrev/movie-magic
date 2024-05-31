@@ -9,8 +9,13 @@ router.get('/create', isAuth, (req, res) => {
 });
 
 router.post('/create', isAuth, async (req, res) => {
-    const newMovie = req.body;
-
+    const user = await req.user;
+    const newMovie = {
+        ...req.body,
+        owner: user._id,
+    };
+    // newMovie.owner = await req.user._id;
+    
     try {
         await movieService.create(newMovie);
 
