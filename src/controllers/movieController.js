@@ -30,7 +30,7 @@ router.get('/movies/:movieId', async (req, res) => {
     // movie.ratingStars = '&#x2605;'.repeat(movie.rating);
 
     // console.log(casts);
-    res.render('details', { movie }); //casts
+    res.render('movie/details', { movie }); //casts
 
 });
 
