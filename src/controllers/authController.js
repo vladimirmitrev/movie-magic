@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { default: mongoose } = require('mongoose');
 const authService = require('../services/authService');
+const { getErrorMessage } = require('../utils/errorUtils');
 
 router.get('/register', (req, res) => {
     res.render('auth/register');
@@ -13,15 +14,7 @@ router.post('/register', async (req, res) => {
         await authService.register(userData);
         res.redirect('/auth/login');
     } catch (err) {
-        let message = '';
-        if (err instanceof mongoose.Error.ValidationError && err.errors) {
-            // message = Object.values(err.errors).at(0).message;
-            message = Object.values(err.errors).map(e => e.message).join(', ');
-        } else if (err instanceof Error) {
-            message = err.message;
-        } else {
-            message = 'An unknown error occurred';
-        }
+       const message = getErrorMessage(err);
 
         // console.log(err.message)
         res.render('auth/register', { ...userData, error: message });
