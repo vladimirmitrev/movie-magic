@@ -5,17 +5,17 @@ const { match } = require('minimatch');
 const userSchema = new Schema({
     email: {
         type: String,
-        required: true,
+        required: [true, 'Email is required!'],
         lowercase: true,
         unique: true,
-        match: [/@[a-zA-Z0-9]+\.[a-zA-Z0-9]+&/, 'Invalid Email Address'],
+        match: [/@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/, 'Invalid Email Address'],
         minLength: [10, 'Email should be at least 10 characters long']
     },
     password: {
         type: String,
         match: [/^[a-zA-Z0-9]+/, 'Password should be alphanumeric'],
         minLength: [6, 'Password should be at least 6 characters'],
-        required: true,
+        required: [true, 'Password is required!'],
     }
 });
 
