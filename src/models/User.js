@@ -1,15 +1,20 @@
 const { Schema, model, MongooseError } = require('mongoose');
 const bcrypt = require('bcrypt');
+const { match } = require('minimatch');
 
 const userSchema = new Schema({
     email: {
         type: String,
         required: true,
         lowercase: true,
-        unique: true
+        unique: true,
+        match: [/@[a-zA-Z0-9]+\.[a-zA-Z0-9]+&/, 'Invalid Email Address'],
+        minLength: [10, 'Email should be at least 10 characters long']
     },
     password: {
         type: String,
+        match: [/^[a-zA-Z0-9]+/, 'Password should be alphanumeric'],
+        minLength: [6, 'Password should be at least 6 characters'],
         required: true,
     }
 });
