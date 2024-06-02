@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 exports.getErrorMessage = (err) => {
     let message = '';
     if (err instanceof mongoose.Error.ValidationError && err.errors) {
