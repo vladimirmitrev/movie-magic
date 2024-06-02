@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const castService = require('../services/castService');
+const { getErrorMessage } = require('../utils/errorUtils');
 
 router.get('/create', (req, res) => {
     res.render('cast/create');
@@ -8,13 +9,14 @@ router.get('/create', (req, res) => {
 router.post('/create', async (req, res) => {
     const castData = req.body;
 
-    // try {
+    try {
         await castService.create(castData);
         res.redirect('/');
-    // } catch(err) {
-    //     console.log(err);
-    //     res.redirect('/create');
-    // }
+    } catch(err) {
+        const message = getErrorMessage(err);
+
+        res.status(400).render('cast/create', { error: message, ...castData });
+    }
 
     // console.log(body);
 });
