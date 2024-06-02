@@ -28,14 +28,19 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    // console.log(email, password);
+    
+    try {
+        const token = await authService.login(email, password);
+        
+        res.cookie('auth', token);
+        
+        res.redirect('/');
 
-    const token = await authService.login(email, password);
-    // console.log(token);
+    } catch (err){ 
+        const message = getErrorMessage(err);
 
-    res.cookie('auth', token);
-
-    res.redirect('/');
+        res.status(400).render('auth/login', { error: message, ...req.body })
+    }
 })
 
 router.get('/logout', (req, res) => {
