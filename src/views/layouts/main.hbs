@@ -9,6 +9,11 @@
 </head>
 <body>
     <div id="box">
+        {{#if error}}
+        <div class="error-container">
+            <p>{{error}}</p>
+        </div>
+        {{/if}}
         <nav>
             <img src="/img/logo.webp" alt="logo">
             <ul class="menu">
@@ -26,7 +31,6 @@
             </ul>
         </nav>
         <main>
-            <h1>{{error}}</h1>
             {{{body}}}
         </main>
         <footer>
